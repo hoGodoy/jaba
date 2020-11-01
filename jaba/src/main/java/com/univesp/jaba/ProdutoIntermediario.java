@@ -13,10 +13,20 @@ public class ProdutoIntermediario {
     private int quantidade;
     private double custo;
     private ArrayList<Insumo>listaInsumo;
+    private String pf;
 
-    /**
-     * @return the codigo
-     */
+    public ProdutoIntermediario(){
+        listaInsumo = new ArrayList();
+    }
+    
+    public ProdutoIntermediario(int codigo, String nome, String unidade, int quantidade, double custo){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.custo = custo;
+        this.unidade = unidade;
+        this.quantidade = quantidade;
+        listaInsumo = new ArrayList();
+    }
     public int getCodigo() {
         return codigo;
     }
@@ -96,5 +106,24 @@ public class ProdutoIntermediario {
      */
     public void setListaInsumo(ArrayList<Insumo> listaInsumo) {
         this.listaInsumo = listaInsumo;
+    }
+    
+    public void addInsumo (Insumo F){
+        F.setpi(this);
+        listaInsumo.add(F);
+    }
+
+    /**
+     * @return the pf
+     */
+    public String getPf() {
+        return pf;
+    }
+
+    /**
+     * @param pf the pf to set
+     */
+    public void setPf(String pf) {
+        this.pf = pf;
     }
 }

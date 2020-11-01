@@ -50,5 +50,5 @@ public class Usuario {
     public void setLoja(String loja) {
         this.loja = loja;
     }
-    
+     
     }

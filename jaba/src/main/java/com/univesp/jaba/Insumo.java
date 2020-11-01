@@ -9,7 +9,9 @@ public class Insumo {
     private String nome;
     private String unidade;
     private int quantidade;
-    private double custo;    
+    private double custo;
+    private String pi;
+    private String pf;
 
     /**
      * @return the codigo
@@ -80,4 +82,24 @@ public class Insumo {
     public void setCusto(double custo) {
         this.custo = custo;
     }
+
+  
+    public String getpi() {
+        return pi;
+    }
+
+    
+    public void setpi(String pi) {
+        this.pi = pi;
+    }
+
+    public String getpf() {
+        return pf;
+    }
+
+    
+    public void setpf(String pf) {
+        this.pf = pf;
+    }
+    
 }

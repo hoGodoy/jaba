@@ -12,12 +12,27 @@ public class ProdutoFinal {
     private String unidade;
     private int quantidade;
     private double custo;
+    private double preco;
     private ArrayList<Insumo>listaInsumo;
-    private ArrayList<ProdutoIntermediario>ListaProdInterm;
+    private ArrayList<ProdutoIntermediario>listaProdInterm;
 
-    /**
-     * @return the codigo
-     */
+    public ProdutoFinal(){
+        listaInsumo = new ArrayList();
+        listaProdInterm = new ArrayList();
+    }
+    
+    public ProdutoFinal(int codigo, String nome, String unidade, int quantidade, double custo, double preco){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.custo = custo;
+        this.unidade = unidade;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        listaInsumo = new ArrayList();
+        listaProdInterm = new ArrayList();
+        }
+            
+    
     public int getCodigo() {
         return codigo;
     }
@@ -103,13 +118,38 @@ public class ProdutoFinal {
      * @return the ListaProdInterm
      */
     public ArrayList<ProdutoIntermediario> getListaProdInterm() {
-        return ListaProdInterm;
+        return listaProdInterm;
     }
 
     /**
      * @param ListaProdInterm the ListaProdInterm to set
      */
     public void setListaProdInterm(ArrayList<ProdutoIntermediario> ListaProdInterm) {
-        this.ListaProdInterm = ListaProdInterm;
+        this.listaProdInterm = ListaProdInterm;
     }
+
+    /**
+     * @return the preco
+     */
+    public double getPreco() {
+        return preco;
+    }
+
+    /**
+     * @param preco the preco to set
+     */
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+    
+    public void addInsumo(Insumo F){
+        F.setpi(this);
+        listaInsumo.add(F);
+    }
+    
+    public void addProdInterm(ProdutoIntermediario F){
+        F.setPf(this);
+        listaProdInterm.add(F);
+    }
+    
 }

@@ -1,23 +1,108 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.univesp.jaba;
+
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author helton
  */
 public class CadInsumo extends javax.swing.JFrame {
+    ArrayList<Insumo> listaInsumo;
+    
+    public void LoadTableIns(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[]{"Nome", "Unidade","Quantidade","Custo"},0);
+        
+        for(int i=0;i<listaInsumo.size();i++){
+            Object linha [] = new Object[] {listaInsumo.get(i).getNome(),
+                                            listaInsumo.get(i).getUnidade(),
+                                            listaInsumo.get(i).getQuantidade(),
+                                            listaInsumo.get(i).getCusto()};
+            
+            modelo.addRow(linha);
+        }        
+        
+        tbl_ins.setModel(modelo);
+        tbl_ins.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tbl_ins.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tbl_ins.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tbl_ins.getColumnModel().getColumn(0).setPreferredWidth(15);
 
-    /**
-     * Creates new form CadInsumo
-     */
+    }   
+    
     public CadInsumo() {
         initComponents();
+        setLocationRelativeTo(null);
+        listaInsumo = new ArrayList();
+        ManipulaInterface("navegar");
     }
 
+    public void ManipulaInterface(String modo){
+        switch(modo){
+            case "navegar":
+                btn_ins_novo.setEnabled(true);
+                btn_ins_cancelar.setEnabled(false);
+                btn_ins_editar.setEnabled(false);
+                btn_ins_excluir.setEnabled(false);
+                btn_ins_salvar.setEnabled(false);
+                c_ins_custo.setEnabled(false);
+                c_ins_nome.setEnabled(false);
+                c_ins_quant.setEnabled(false);
+                c_ins_unid.setEnabled(false);
+                break;
+            
+            case "novo":
+                btn_ins_novo.setEnabled(false);
+                btn_ins_cancelar.setEnabled(true);
+                btn_ins_editar.setEnabled(false);
+                btn_ins_excluir.setEnabled(false);
+                btn_ins_salvar.setEnabled(true);
+                c_ins_custo.setEnabled(true);
+                c_ins_nome.setEnabled(true);
+                c_ins_quant.setEnabled(true);
+                c_ins_unid.setEnabled(true);                
+                break;
+                
+            case "editar":
+                btn_ins_novo.setEnabled(true);
+                btn_ins_cancelar.setEnabled(true);
+                btn_ins_editar.setEnabled(false);
+                btn_ins_excluir.setEnabled(false);
+                btn_ins_salvar.setEnabled(false);
+                c_ins_custo.setEnabled(true);
+                c_ins_nome.setEnabled(true);
+                c_ins_quant.setEnabled(true);
+                c_ins_unid.setEnabled(true);                
+                break;
+                
+            case "excluir":
+                btn_ins_novo.setEnabled(true);
+                btn_ins_cancelar.setEnabled(false);
+                btn_ins_editar.setEnabled(false);
+                btn_ins_excluir.setEnabled(true);
+                btn_ins_salvar.setEnabled(false);
+                c_ins_custo.setEnabled(false);
+                c_ins_nome.setEnabled(false);
+                c_ins_quant.setEnabled(false);
+                c_ins_unid.setEnabled(false);
+                break;
+                
+            case "selecao":
+                btn_ins_novo.setEnabled(false);
+                btn_ins_cancelar.setEnabled(false);
+                btn_ins_editar.setEnabled(true);
+                btn_ins_excluir.setEnabled(true);
+                btn_ins_salvar.setEnabled(false);
+                c_ins_custo.setEnabled(false);
+                c_ins_nome.setEnabled(false);
+                c_ins_quant.setEnabled(false);
+                c_ins_unid.setEnabled(false);
+                break;
+            default:System.out.println("Modo inválido");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,21 +117,21 @@ public class CadInsumo extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_ins = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btn_ins_novo = new javax.swing.JButton();
+        btn_ins_editar = new javax.swing.JButton();
+        btn_ins_excluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        c_ins_nome = new javax.swing.JTextField();
+        c_ins_unid = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        c_ins_quant = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        c_ins_custo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_ins_salvar = new javax.swing.JButton();
+        btn_ins_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,7 +139,7 @@ public class CadInsumo extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
         jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
+        jTextArea1.setRows(2);
         jTextArea1.setText("Produtos comprados prontos e que são usados na preparação dos seus lanches");
         jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setViewportView(jTextArea1);
@@ -82,6 +167,11 @@ public class CadInsumo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_ins.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_insMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbl_ins);
         if (tbl_ins.getColumnModel().getColumnCount() > 0) {
             tbl_ins.getColumnModel().getColumn(0).setResizable(false);
@@ -94,45 +184,65 @@ public class CadInsumo extends javax.swing.JFrame {
             tbl_ins.getColumnModel().getColumn(3).setPreferredWidth(15);
         }
 
-        jButton4.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
-        jButton4.setText("novo");
+        btn_ins_novo.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        btn_ins_novo.setText("novo");
+        btn_ins_novo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ins_novoActionPerformed(evt);
+            }
+        });
 
-        jButton5.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
-        jButton5.setText("editar");
+        btn_ins_editar.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        btn_ins_editar.setText("editar");
+        btn_ins_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ins_editarActionPerformed(evt);
+            }
+        });
 
-        jButton6.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
-        jButton6.setText("excluir");
+        btn_ins_excluir.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        btn_ins_excluir.setText("excluir");
 
         jLabel1.setFont(new java.awt.Font("Chilanka", 0, 24)); // NOI18N
-        jLabel1.setText("matéria prima");
+        jLabel1.setText("matérias primas");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastrar matéria-prima"));
 
         jLabel2.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
         jLabel2.setText("nome");
 
-        jTextField1.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        c_ins_nome.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
 
-        jTextField2.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        c_ins_unid.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
         jLabel3.setText("unidade");
 
-        jTextField3.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        c_ins_quant.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
         jLabel4.setText("quantidade");
 
-        jTextField4.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        c_ins_custo.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
         jLabel5.setText("custo");
 
-        jButton2.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
-        jButton2.setText("salvar");
+        btn_ins_salvar.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        btn_ins_salvar.setText("salvar");
+        btn_ins_salvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ins_salvarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
-        jButton3.setText("cancelar");
+        btn_ins_cancelar.setFont(new java.awt.Font("Chilanka", 0, 14)); // NOI18N
+        btn_ins_cancelar.setText("cancelar");
+        btn_ins_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ins_cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,24 +253,24 @@ public class CadInsumo extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(4, 4, 4)
-                        .addComponent(jTextField1))
+                        .addComponent(c_ins_nome))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(4, 4, 4)
-                        .addComponent(jTextField2))
+                        .addComponent(c_ins_unid))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(4, 4, 4)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                        .addComponent(c_ins_quant, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4))
+                        .addComponent(c_ins_custo))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_ins_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_ins_salvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(9, 9, 9)))
                 .addContainerGap())
         );
@@ -170,23 +280,23 @@ public class CadInsumo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(c_ins_nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(c_ins_unid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(c_ins_quant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(c_ins_custo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btn_ins_salvar)
+                    .addComponent(btn_ins_cancelar))
                 .addContainerGap())
         );
 
@@ -203,11 +313,11 @@ public class CadInsumo extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_ins_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_ins_editar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_ins_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -222,9 +332,9 @@ public class CadInsumo extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(btn_ins_novo)
+                    .addComponent(btn_ins_editar)
+                    .addComponent(btn_ins_excluir))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -245,6 +355,56 @@ public class CadInsumo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_ins_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_novoActionPerformed
+        c_ins_nome.setText("");
+        c_ins_unid.setText("");
+        c_ins_quant.setText("");    
+        c_ins_custo.setText("");   
+        ManipulaInterface("novo");
+    }//GEN-LAST:event_btn_ins_novoActionPerformed
+
+    private void btn_ins_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_cancelarActionPerformed
+        c_ins_nome.setText("");
+        c_ins_unid.setText("");
+        c_ins_quant.setText("");    
+        c_ins_custo.setText("");   
+        ManipulaInterface("navegar");
+    }//GEN-LAST:event_btn_ins_cancelarActionPerformed
+
+    private void btn_ins_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_salvarActionPerformed
+        int quant = Integer.parseInt(c_ins_quant.getText());
+        float cust = Float.parseFloat(c_ins_custo.getText());
+        
+        Insumo I = new Insumo(c_ins_nome.getText(), c_ins_unid.getText(), quant, cust);
+        
+        listaInsumo.add(I);
+        
+        LoadTableIns();
+        ManipulaInterface("navegar");
+        c_ins_nome.setText("");
+        c_ins_unid.setText("");
+        c_ins_quant.setText("");    
+        c_ins_custo.setText("");
+    }//GEN-LAST:event_btn_ins_salvarActionPerformed
+
+    private void tbl_insMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_insMouseClicked
+        int index = tbl_ins.getSelectedRow();
+        if(index >= 0 && index <=listaInsumo.size()){
+        
+        Insumo I = listaInsumo.get(index);
+            
+        c_ins_nome.setText(I.getNome());
+        c_ins_unid.setText(I.getUnidade());
+        c_ins_quant.setText(String.valueOf(I.getQuantidade()));
+        c_ins_custo.setText(String.valueOf(I.getCusto()));
+        ManipulaInterface("selecao");
+        }
+    }//GEN-LAST:event_tbl_insMouseClicked
+
+    private void btn_ins_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ins_editarActionPerformed
+        ManipulaInterface("editar");
+    }//GEN-LAST:event_btn_ins_editarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,11 +442,15 @@ public class CadInsumo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btn_ins_cancelar;
+    private javax.swing.JButton btn_ins_editar;
+    private javax.swing.JButton btn_ins_excluir;
+    private javax.swing.JButton btn_ins_novo;
+    private javax.swing.JButton btn_ins_salvar;
+    private javax.swing.JTextField c_ins_custo;
+    private javax.swing.JTextField c_ins_nome;
+    private javax.swing.JTextField c_ins_quant;
+    private javax.swing.JTextField c_ins_unid;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -297,10 +461,6 @@ public class CadInsumo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTable tbl_ins;
     // End of variables declaration//GEN-END:variables
 }
