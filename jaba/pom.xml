@@ -33,4 +33,5 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+    <name>jaba-dogs</name>
 </project>
